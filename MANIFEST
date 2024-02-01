@@ -1,0 +1,7 @@
+data/insideout_scaledage.csv
+copy of ~/warfield/apok2/insideout_scaledage.csv
+has ages and uncertainties from K2.
+
+notebooks/
+age_inference.ipynb
+demos two ways of inferring true distributions of ages using Bayesian emcee and hierarchical Bayesian pymc3 scripts.
