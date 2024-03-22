@@ -1,0 +1,84 @@
+&model
+	model_type = 'EVOL'  ! Obtain stellar structure from an evolutionary model
+	file = 'profile3.data.GYRE'
+	file_format = 'MESA' ! File format of the evolutionary model
+/
+
+&constants
+        G_GRAVITY = 6.6740800000e-08
+	R_sun = 6.958e10  
+	M_sun = 1.988435e33
+/
+
+&mode
+	l = 0
+/
+
+&osc
+        outer_bound = 'VACUUM' ! Use a zero-pressure outer mechanical boundary condition
+	nonadiabatic = .TRUE.
+	! narf_approx = .TRUE.
+	! nar_approx = .TRUE.
+/
+
+&num
+	! diff_scheme = 'MAGNUS_GL2'
+	diff_scheme = 'MAGNUS_GL4' ! 4th-order Magnus solver for initial-value integrations	
+	! diff_scheme = 'COLLOC_GL4' ! rich recommended this one. using this has meant that n_iter_max = 50 (default) leads to failures to converge... except that even using n_iter_max = 100 it still failed.
+	! c_root_solver = 'SECANT'
+	n_iter_max = 100
+	
+/
+
+&scan
+        freq_min_units = 'NONE'
+        freq_max_units = 'NONE'
+        freq_min = 0.5       ! Minimum frequency to scan from                                                                
+	 freq_max = 15.0        ! Maximum frequency to scan to                                                                
+         n_freq = 1000          ! Number of frequency points in scan  
+/
+
+&shoot_grid ! Can be left empty
+/
+
+&recon_grid ! Can be left empty
+/
+
+&grid
+		! alpha_osc = 10  ! Ensure at least 10 points per wavelength in propagation regions
+	! alpha_exp = 4   ! Ensure at least 2 points per scale length in evanescent regions
+			! n_inner = 5  	   ! Ensure at least 5 points between center and inner turning point
+	alpha_thm = 10
+	! alpha_str = 10
+	
+/
+
+&ad_output
+	summary_file = 'profile.3.data.gyre_ad.eigval.h5'
+	summary_file_format = 'HDF'                             ! Format of summary file
+        summary_item_list = 'M_star,R_star,L_star,l,n_pg,n_g,omega,freq,E_p,E_g,E,E_norm,Delta_p,Delta_g,freq_units,freq_frame' 
+        mode_template = 'profile.3.data.gyre_ad.mode-%J.h5'                      		  ! File-name prefix for mode files
+	mode_file_format = 'HDF'                   		    ! Format of mode files
+        mode_item_list = 'M_star,R_star,L_star,m,rho,n,l,n_p,n_g,omega,freq,E,E_p,E_g,E_norm,x,nabla_ad,delta,xi_r,xi_h,prop_type'
+        freq_units = 'UHZ'
+/
+
+&nad_output
+	summary_file = 'profile.3.data.gyre_nad.eigval.h5'
+	summary_file_format = 'HDF'                             ! Format of summary file
+        summary_item_list = 'M_star,R_star,L_star,l,n_pg,n_g,omega,freq,E_p,E_g,E,E_norm,Delta_p,Delta_g,freq_units,freq_frame'         mode_template = 'profile.3.data.gyre_ad.mode-%J.h5'                      		  ! File-name prefix for mode files
+	mode_file_format = 'HDF'                   		    ! Format of mode files
+        mode_item_list = 'M_star,R_star,L_star,m,rho,n,l,n_p,n_g,omega,freq,E,E_p,E_g,E_norm,x,nabla_ad,delta,xi_r,xi_h,prop_type'
+        freq_units = 'UHZ'
+/
+
+
+
+
+
+
+
+
+
+
+

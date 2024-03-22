@@ -1,0 +1,129 @@
+&model
+	model_type = 'EVOL'  ! Obtain stellar structure from an evolutionary model
+	file = 'FILEIN'
+	file_format = 'MESA' ! File format of the evolutionary model
+/
+
+&constants                                                                                                                       
+        G_GRAVITY = 6.6740800000e-08                                                                                             
+        R_sun = 6.958e10                                                                                                         
+        M_sun = 1.988435e33                                                                                                      
+/                                                                                                                                
+  
+
+&mode
+	l = 0                     ! Harmonic degree
+	tag = 'radial'
+/
+
+! &mode
+! 	l = 1                     ! Harmonic degree
+! 	tag = 'non-radial'
+! /
+
+! &mode
+! 	l = 2                     ! Harmonic degree
+! /
+
+&osc
+
+	outer_bound = 'VACUUM' ! Use a zero-pressure outer mechanical boundary condition
+	outer_bound = 'DZIEM'
+        ! nonadiabatic = .FALSE.  !don't do non-ad calcs by default
+        tag_list = 'radial,non-radial'
+	alpha_thm = 1
+	
+/
+&rot
+! no rotation
+/
+&num
+	diff_scheme = 'MAGNUS_GL2' ! 4th-order Magnus solver for initial-value integrations GL6 returns SIGFPE as of JCZ 240721
+	nad_search = 'MINMOD'                                                                                           
+        restrict_roots = .FALSE.
+/
+
+! &scan
+!         grid_type = 'INVERSE' ! Scan for modes using a uniform-in-period grid; best for g modes
+!         freq_units = 'NONE'   ! Interpret freq_min and freq_max as being dimensionless
+!         freq_min = 1.0       ! Minimum frequency to scan from
+! 	freq_max = 30.0        ! Maximum frequency to scan to
+! 	n_freq = 5000          ! Number of frequency points in scan
+! /
+
+&scan
+        grid_type = 'LINEAR' ! Scan for modes using a uniform-in-frequency grid; best for p modes
+	freq_min_units = 'NONE'                                                                                                 
+        freq_max_units = 'NONE'
+	freq_min = 1.0       ! Minimum frequency to scan from
+	freq_max = 40.0        ! Maximum frequency to scan to
+	n_freq = 2000          ! Number of frequency points in scan
+        tag_list = 'radial'  ! Comma-separated list of tags to match
+/
+
+&scan
+        grid_type = 'INVERSE'   ! Scan for modes using a uniform-in-period grid; best for g modes
+	freq_min_units= 'NONE'                                                                                                 
+        freq_max_units = 'NONE'
+        freq_min = 1.0           ! Minimum frequency to scan from
+	freq_max = 40.0           ! Maximum frequency to scan to
+	n_freq = 7000           ! Number of frequency points in scan
+        tag_list = 'non-radial' ! Comma-separated list of tags to match
+/
+&grid
+          w_osc = 10 ! Oscillatory region weight parameter                                                                       
+          w_exp = 2  ! Exponential region weight parameter                                                                       
+          w_ctr = 10 ! Central region weight parameter 
+! w_thm=0
+! w_ctr=0
+! w_exp=0
+! w_str=0
+! w_osc=0
+/
+&shoot_grid ! Can be left empty
+/
+
+&recon_grid ! Can be left empty
+/
+
+! &output
+!         summary_file = 'summary.txt'                            ! File name for summary file
+! 	summary_file_format = 'TXT'                             ! Format of summary file
+!         summary_item_list = 'M_star,R_star,L_star,freq_units,l,n_pg,omega,E_norm' ! Items to appear in summary file
+!         mode_prefix = 'mode-'                      		  ! File-name prefix for mode files
+! 	mode_file_format = 'TXT'                   		    ! Format of mode files
+!         mode_item_list = 'l,n_pg,prop_type,omega,x,xi_r,xi_h'   		      ! Items to appear in mode files
+! /
+ Ignoring missing/invalid detail item:V
+  Ignoring missing/invalid detail item:delL
+   Ignoring missing/invalid detail item:delS
+    Ignoring missing/invalid detail item:delT
+     Ignoring missing/invalid detail item:delp
+      Ignoring missing/invalid detail item:delrho
+       Ignoring missing/invalid detail item:delta
+        Ignoring missing/invalid detail item:dphip_dx
+	 Ignoring missing/invalid detail item:p
+	  Ignoring missing/invalid detail item:phip
+&ad_output
+LSUMMARY	summary_file = 'FILEOUT.gyre_ad.eigval.h5'
+LSUMMARY	summary_file_format = 'HDF'                             ! Format of summary file
+LSUMMARY        summary_item_list = 'M_star,R_star,L_star,l,n_pg,n_g,omega,freq,E,E_norm,E_p,E_g' ! Items to appear in summary file
+LMODE        detail_template = 'FILEOUT.gyre_ad.mode-%ID.h5'                      		  ! File-name prefix for mode files
+LMODE	detail_file_format = 'HDF'                   		    ! Format of mode files
+LMODE	detail_item_list = 'M_star,R_star,L_star,m,rho,n,l,n_p,n_g,omega,freq,E,E_norm,W,x,As,U,c_1,Gamma_1,nabla_ad,xi_r,xi_h,lag_L,lag_T,dE_dx,dW_dx,T,E_p,E_g,lag_P,lag_rho'
+! LMODE	detail_item_list = 'l,n_pg,omega,x,xi_r,xi_h'
+	freq_units = 'UHZ'
+/
+
+! JCZ 210721
+! FGONG format does not give all the partial derivatives needed to do non-ad calcs. so leaving this out. (Use OSC instead --- this should be done !!!)
+&nad_output
+LSUMMARY	summary_file = 'FILEOUT.gyre_nad.eigval.h5'
+LSUMMARY		summary_file_format = 'HDF'                             ! Format of summary file
+LSUMMARY        summary_item_list = 'M_star,R_star,L_star,l,n_pg,n_g,omega,freq,E,E_norm,E_p,E_g' ! Items to appear in summary file
+LMODE        detail_template = 'FILEOUT.gyre_nad.mode-%ID.h5'                      		  ! File-name prefix for mode files
+LMODE	detail_file_format = 'HDF'                   		    ! Format of mode files
+LMODE	detail_item_list = 'M_star,R_star,L_star,m,rho,n,l,n_p,n_g,omega,freq,E,E_norm,W,x,As,U,c_1,Gamma_1,nabla_ad,xi_r,xi_h,lag_L,lag_T,dE_dx,dW_dx,T,E_p,E_g,lag_P,lag_rho'
+! LMODE	detail_item_list = 'l,n_pg,omega,x,xi_r,xi_h'
+	freq_units = 'UHZ'
+/
