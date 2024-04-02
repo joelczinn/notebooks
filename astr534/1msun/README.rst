@@ -1,50 +1,86 @@
-====================
-mesa/star Quickstart
-====================
+.. _1M_pre_ms_to_wd:
 
-..
-  If you can't stand reading anything that isn't on the web, skip
-  this and go directly to https://docs.mesastar.org.  Even if you do
-  read this file, when you are done you should still go to that site!
+***************
+1M_pre_ms_to_wd
+***************
 
-These directions assume you have already installed MESA.
+This test case checks the evolution of a 1 Msun, Z=0.02 metallicity from the pre-main sequence to a white dwarf. 
 
-Copy this work directory to somewhere outside the mesa directory tree
-and name it anything you like.
+This test case has six parts. Click to see a larger view of a plot.
 
-Compile by executing the ``mk`` script::
+* Part 1 (``inlist_start_header``) builds a 1 Msun, Z=0.02 metallicity pre-main-sequence model.
 
-    ./mk
+* Part 2 (``inlist_to_end_core_h_burn``) continues the evolution until core hydrogen depletion (mass fraction h1_center < 1e-4).
 
-This compiles the files in ``src/``, links them against MESA, and
-produces the ``star`` executable file.
+.. image:: ../../../star/test_suite/1M_pre_ms_to_wd/docs/grid6_00000295.svg
+   :scale: 100%
 
-By convention, run the program using the  ``rn`` script::
+* Part 3 (``inlist_to_start_he_core_flash_header``) continues the evolution until the onset of core helium ignition (power from he burning > 10).
 
-    ./rn
+.. image:: ../../../star/test_suite/1M_pre_ms_to_wd/docs/grid6_00010474.svg
+   :scale: 100%
 
-When MESA runs, it first reads the ``inlist`` file.  This file can
-point to other inlist files.  Here, it points to ``inlist_project``
-and ``inlist_pgstar``.  You might want to change the file name of
-``inlist_project`` to something more appropriate for your work, such
-as ``inlist_hot_jupiter`` -- if you do, then change the names in
-``inlist`` to match.
+* Part 4 (``inlist_to_end_core_he_burn``) continues the evolution until core helium depletion (mass fraction he4_center < 1e-4).
 
-You can control MESA by editing the options in the various sectinons
-of the inlist.  The full set of parameters and their default values
-can be found in the defaults files listed in the inlists.
+.. image:: ../../../star/test_suite/1M_pre_ms_to_wd/docs/grid6_00012472.svg
+   :scale: 100%
 
-To restart MESA from a saved photo file, run the program using the
-``re`` script::
+* Part 5 (``inlist_to_end_agb``) continues the evolution through the thermal pulses until the end of the AGB phase of evolution (hydrogen-rich envelope mass < 1e-2 Msun).
 
-    ./re [photo]
+.. image:: ../../../star/test_suite/1M_pre_ms_to_wd/docs/grid6_00013000.svg
+   :scale: 100%
 
-where ``[photo]`` is one of the saved snapshot files in ``photos``.
-If no file is specified, MESA restarts from the most recent photo.
 
-You can remove the compiled files and the star program by executing
-the ``clean`` script::
+* Part 6 (``inlist_to_wd``) continues the evolution until the luminosity of the cooling white dwarf reaches L < 0.1 Lsun.
 
-    ./clean
+.. image:: ../../../star/test_suite/1M_pre_ms_to_wd/docs/grid6_00013356.svg
+   :scale: 100%
 
+pgstar commands used for the plots above:
+
+.. code-block:: console
+
+ &pgstar
+
+   file_white_on_black_flag = .true. ! white_on_black flags -- true means white foreground color on black background
+   file_device = 'png'            ! png
+   file_extension = 'png'
+
+   !file_device = 'vcps'          ! postscript
+   !file_extension = 'ps'
+
+    pgstar_interval = 10
+    file_digits = 8
+
+      Grid6_win_flag = .true.
+      Grid6_win_width = 15
+         
+      Grid6_file_flag = .true.
+      Grid6_file_dir = 'png'
+      Grid6_file_prefix = 'grid6_'
+      Grid6_file_interval = 1000 ! output when mod(model_number,Grid6_file_interval)==0
+      Grid6_file_width = 15 ! (inches) negative means use same value as for window
+
+      Abundance_log_mass_frac_min = -4.0 
+      Abundance_legend_max_cnt = 0
+      num_abundance_line_labels = 4
+      Abundance_title = ''
+
+      HR_title = ''
+
+      TRho_title = '' 
+
+      Summary_Burn_title = '' 
+      Summary_Burn_xaxis_name = 'mass' 
+      Summary_Burn_xaxis_reversed = .false.
+      Summary_Burn_xmin = 0.00 ! -101d0 ! only used if /= -101d0
+      Summary_Burn_xmax = 1.0  ! only used if /= -101d0
+
+
+ / ! end of pgstar namelist
+
+
+
+
+Last-Updated: 28May2021 (MESA ebecc10) by fxt
 
