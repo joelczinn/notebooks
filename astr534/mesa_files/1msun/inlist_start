@@ -9,7 +9,7 @@
       save_model_filename = 'start.mod'
       required_termination_code_string = 'log_L_lower_limit'
 
-      !pgstar_flag = .true.
+      pgstar_flag = .true.
       
 / ! end of star_job namelist
 
@@ -20,46 +20,40 @@
 
 &kap
       Zbase = 0.02d0
-
       kap_file_prefix = 'gs98'
       use_Type2_opacities = .true.
 
 / ! end of kap namelist
 
 &controls
-time_delta_coeff = 0.5d0
+      initial_mass = 1.0
+      initial_z = 0.02d0
       ! stop when the luminosity has decreased to 10 Lsun
       ! for a 1 Msun star, this is roughly the on birthline
       log_L_lower_limit = 1
-
-      ! limit max_model_number as part of test_suite
-      max_model_number = 1000
-
-      initial_mass = 1.0
-      initial_z = 0.02d0
-      
       
       varcontrol_target = 1d-3
 
       photo_interval = 100
       profile_interval = 100
-      history_interval = 1
-      terminal_interval = 50
+      history_interval = 10
+      terminal_interval = 10
       write_header_frequency = 10
+
+      use_gold2_tolerances = .true.
+      
+      !photo_interval = 1
+      !profile_interval = 1
+      !history_interval = 1
+      !terminal_interval = 1
 
 / ! end of controls namelist
 
-
-
 &pgstar
-
-         
-
-         
       Grid6_win_flag = .true.
       Grid6_win_width = 11
-         
-      !Grid6_file_flag = .true.
+
+      Grid6_file_flag = .true.
       Grid6_file_dir = 'png'
       Grid6_file_prefix = 'grid6_'
       Grid6_file_interval = 5 ! output when mod(model_number,Grid6_file_interval)==0
@@ -78,14 +72,12 @@ time_delta_coeff = 0.5d0
       Abundance_xmax = -101d0 ! only used if /= -101d0
       Abundance_log_mass_frac_min = -6 ! only used if < 0
 
-      !Profile_Panels4_win_flag = .true.
-      !Profile_Panels4_win_width = 6
+      Profile_Panels4_win_flag = .true.
+      Profile_Panels4_win_width = 6
          
       ! Abundance window -- current model abundance profiles
-      
-         !Abundance_win_flag = .true.
-      
-         Abundance_win_width = 9
-         Abundance_win_aspect_ratio = 0.75 ! aspect_ratio = height/width
+      Abundance_win_flag = .true.
+      Abundance_win_width = 9
+      Abundance_win_aspect_ratio = 0.75 ! aspect_ratio = height/width
    
 / ! end of pgstar namelist
