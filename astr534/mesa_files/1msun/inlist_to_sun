@@ -105,9 +105,8 @@
 
       Profile_Panels4_win_flag = .true.
       Profile_Panels4_win_width = 6
-         
-      Abundance window -- current model abundance profiles
-      
+
+      !Abundance window -- current model abundance profiles
       Abundance_win_flag = .true.
       
       Abundance_win_width = 9
