@@ -61,7 +61,7 @@
       Blocker_scaling_factor = 0.7d0
 
       photo_interval = 50
-      profile_interval = 100
+      profile_interval = 50
       history_interval = 1
       terminal_interval = 10
       write_header_frequency = 10
