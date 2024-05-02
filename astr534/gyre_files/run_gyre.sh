@@ -157,9 +157,9 @@ fi
 echo $exe
 echo $new_file
 $exe $new_file #2>> ${outdir}/gyre.err 1>> ${outdir}/gyre.out
-python break_mesa.py $file $adflag --dir $outdir
-echo "appending ${file}.${adflag}.astero.in to ${outdir}/${outfile}.astero"
-cat ${file}.${adflag}.astero.in >> ${outdir}/${outfile}.astero
+#python break_mesa.py $file $adflag --dir $outdir
+#echo "appending ${file}.${adflag}.astero.in to ${outdir}/${outfile}.astero"
+#cat ${file}.${adflag}.astero.in >> ${outdir}/${outfile}.astero
 ################################################################
 done
 # clear previous output files
