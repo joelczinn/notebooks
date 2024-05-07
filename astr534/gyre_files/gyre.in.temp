@@ -99,7 +99,7 @@
 LSUMMARY	summary_file = 'FILEOUT.gyre_ad.eigval.h5'
 LSUMMARY	summary_file_format = 'HDF'                             ! Format of summary file
 LSUMMARY        summary_item_list = 'M_star,R_star,L_star,l,n_pg,n_g,omega,freq,E,E_norm,E_p,E_g' ! Items to appear in summary file
-LMODE        detail_template = 'FILEOUT.gyre_ad.mode-%J.h5'                      		  ! File-name prefix for mode files
+LMODE        detail_template = 'FILEOUT.gyre_ad.mode-%ID.h5'                      		  ! File-name prefix for mode files
 LMODE	detail_file_format = 'HDF'                   		    ! Format of mode files
 !LMODE	detail_item_list = 'M_star,R_star,L_star,m,rho,p,n,l,n_p,n_g,omega,freq,E,E_norm,W,x,V,As,U,c_1,Gamma_1,nabla_ad,delta,xi_r,xi_h,phip,dphip_dx,delS,delL,delp,delrho,delT,dE_dx,dW_dx,T,E_p,E_g'
 LMODE detail_item_list = 'M_star,R_star,L_star,m,rho,n,l,n_p,n_g,omega,freq,E,E_norm,W,x,As,U,c_1,Gamma_1,nabla_ad,xi_r,xi_h,lag_L,lag_T,dE_dx,dW_dx,T,E_p,E_g,lag_P,lag_rho'
@@ -113,7 +113,7 @@ LMODE detail_item_list = 'M_star,R_star,L_star,m,rho,n,l,n_p,n_g,omega,freq,E,E_
 LSUMMARY	summary_file = 'FILEOUT.gyre_nad.eigval.h5'
 LSUMMARY		summary_file_format = 'HDF'                             ! Format of summary file
 LSUMMARY        summary_item_list = 'M_star,R_star,L_star,l,n_pg,n_g,omega,freq,E,E_norm,E_p,E_g' ! Items to appear in summary file
-LMODE        detail_template = 'FILEOUT.gyre_nad.mode-%J.h5'                      		  ! File-name prefix for mode files
+LMODE        detail_template = 'FILEOUT.gyre_nad.mode-%ID.h5'                      		  ! File-name prefix for mode files
 LMODE	detail_file_format = 'HDF'                   		    ! Format of mode files
 LMODE	detail_item_list = 'M_star,R_star,L_star,m,rho,p,n,l,n_p,n_g,omega,freq,E,E_norm,W,x,V,As,U,c_1,Gamma_1,nabla_ad,delta,xi_r,xi_h,phip,dphip_dx,delS,delL,delp,delrho,delT,dE_dx,dW_dx,T,E_p,E_g'
 ! LMODE	detail_item_list = 'l,n_pg,omega,x,xi_r,xi_h'
